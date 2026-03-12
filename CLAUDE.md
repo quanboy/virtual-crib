@@ -14,7 +14,7 @@ Victor Quan's personal portfolio website. Two static HTML pages (`portfolio.html
 
 **Backend** (`spotify-backend/`)
 - Spring Boot 3.2 / Java 17
-- Caffeine caching (30s now-playing, 120s recently-played)
+- Caffeine caching (30s now-playing, 120s recently-played, 600s headlines)
 - Deployed on Railway
 
 ## Development
@@ -27,11 +27,19 @@ C:\Users\shuiw\AppData\Roaming\npm\node.exe C:\Users\shuiw\AppData\Roaming\npm\n
 ```
 
 **Backend:**
-```bash
+```powershell
 cd spotify-backend
-mvn spring-boot:run
+mvn spring-boot:run "-Dspring-boot.run.profiles=local"
 ```
 Requires `SPOTIFY_CLIENT_ID` and `SPOTIFY_CLIENT_SECRET` env vars to start. `SPOTIFY_REFRESH_TOKEN` is optional on first boot — get it by running the OAuth flow (see below).
+
+`mvn` is not on PATH by default. Either use the full path or add it once (no admin needed):
+```powershell
+[System.Environment]::SetEnvironmentVariable("PATH", $env:PATH + ";C:\Program Files\JetBrains\IntelliJ IDEA 2025.3.3\plugins\maven\lib\maven3\bin", "User")
+```
+Then reopen your terminal.
+
+Local secrets go in `spotify-backend/src/main/resources/application-local.properties` (gitignored). That file is loaded automatically when running with `-Dspring-boot.run.profiles=local`.
 
 ## File Layout
 
@@ -48,10 +56,12 @@ virtual-crib/
 │       ├── main/java/com/victorquan/spotify/
 │       │   ├── controller/
 │       │   │   ├── AuthController.java     # OAuth flow (/auth/login, /auth/callback)
-│       │   │   └── SpotifyController.java  # API endpoints (/spotify/*)
+│       │   │   ├── SpotifyController.java  # API endpoints (/spotify/*)
+│       │   │   └── NewsController.java     # GET /news/headlines
 │       │   ├── service/
 │       │   │   ├── SpotifyService.java     # Spotify API calls + caching
-│       │   │   └── SpotifyTokenService.java # Token refresh (scheduled + on-demand)
+│       │   │   ├── SpotifyTokenService.java # Token refresh (scheduled + on-demand)
+│       │   │   └── NewsService.java        # Fetches top headlines from newsapi.org
 │       │   └── config/
 │       │       └── SpotifyConfig.java      # Caffeine cache + CORS config
 │       ├── main/resources/application.properties
@@ -107,6 +117,14 @@ All JS is inline in the HTML files:
 
 Track object fields: `isPlaying`, `title`, `id`, `artist`, `album`, `albumArt`, `url`, `previewUrl`, `durationMs`.
 
+## News API Endpoints
+
+| Endpoint | Returns | Cache |
+|---|---|---|
+| `GET /news/headlines` | Up to 15 US top headline strings | 600s |
+
+Powered by [newsapi.org](https://newsapi.org). Returns an empty array if `NEWS_API_KEY` is not set (ticker stays hidden).
+
 ## OAuth Flow (one-time setup)
 
 **Already completed.** `SPOTIFY_REFRESH_TOKEN` is set in Railway. Backend is live and serving data.
@@ -136,11 +154,12 @@ The running instance is updated immediately after step 2 (no restart needed); en
 | `SPOTIFY_REFRESH_TOKEN` | No* | `""` | *App starts without it; get via OAuth flow |
 | `SPOTIFY_CALLBACK_URL` | Yes (prod) | `http://localhost:8080/auth/callback` | Must match Spotify dashboard exactly |
 | `ALLOWED_ORIGINS` | Yes (prod) | `http://localhost:3000` | Set to portfolio's deployed domain |
+| `NEWS_API_KEY` | No | `""` | Free key from newsapi.org; ticker hidden if missing |
 | `PORT` | No | `8080` | Railway sets this automatically |
 
 ## Status
 
-**Working:** Spotify widget live in `portfolio.html` — fetches now-playing + recently-played from Railway backend. Footer copyright updated to Victor Quan 2026.
+**Working:** Spotify widget live in `portfolio.html` — fetches now-playing + recently-played from Railway backend. Footer copyright updated to Victor Quan 2026. News ticker endpoint (`/news/headlines`) implemented; `NEWS_API_KEY` set locally via `application-local.properties`.
 
 **Still needs personalization:**
 - `about.html` — bio text (`[your current project or role]`, `[Company A]`, `[Company B]`, interests), location, years of experience
@@ -148,6 +167,7 @@ The running instance is updated immediately after step 2 (no restart needed); en
 
 **Still needs doing:**
 - Deploy frontend to static host, then set `ALLOWED_ORIGINS` in Railway
+- Add `NEWS_API_KEY` to Railway environment variables so ticker works in production
 - Run `mvn test` to verify unit tests pass against latest backend code
 
 ## Deployment

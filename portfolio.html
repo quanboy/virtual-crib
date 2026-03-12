@@ -1,332 +1,235 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>victor quan.</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/main.css">
-</head>
-<body>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <div class="cursor" id="cursor"></div>
 
-<div class="cursor" id="cursor"></div>
-
-<!-- NEWS TICKER -->
-<div class="ticker-bar" aria-label="Breaking news ticker">
-    <div class="ticker-label"><span></span>Breaking</div>
-    <div class="ticker-track" id="ticker-track">
-        <div class="ticker-item">Blacklists Anthropic from government work — Pentagon severs $200M contract with Claude AI maker after company refuses to lift all safeguards</div>
-        <div class="ticker-item">Speaks in Corpus Christi, TX — Teases third term: "We're entitled to it" — declines to endorse in Texas Senate race</div>
-        <div class="ticker-item">Acknowledges "difficult choice" on Iran after failed diplomacy — US Central Command briefs president on military options</div>
-        <div class="ticker-item">Pro-Trump activists circulate draft executive order seeking to declare national emergency over 2020 election, seeking extraordinary power over voting</div>
-        <div class="ticker-item">State of the Union clocks in at 108 minutes — longest presidential address in at least 60 years — clashes with Democratic lawmakers</div>
-        <div class="ticker-item">DOJ reviewing whether Epstein-related documents mentioning Trump were improperly withheld from public releases</div>
-        <div class="ticker-item">Supreme Court ruled against signature tariff policy — Democrats vow to block extension of 15% global tariffs beyond 150-day window</div>
-        <div class="ticker-item">Blacklists Anthropic from government work — Pentagon severs $200M contract with Claude AI maker after company refuses to lift all safeguards</div>
-        <div class="ticker-item">Speaks in Corpus Christi, TX — Teases third term: "We're entitled to it" — declines to endorse in Texas Senate race</div>
-        <div class="ticker-item">Acknowledges "difficult choice" on Iran after failed diplomacy — US Central Command briefs president on military options</div>
-        <div class="ticker-item">Pro-Trump activists circulate draft executive order seeking to declare national emergency over 2020 election, seeking extraordinary power over voting</div>
-        <div class="ticker-item">State of the Union clocks in at 108 minutes — longest presidential address in at least 60 years — clashes with Democratic lawmakers</div>
-        <div class="ticker-item">DOJ reviewing whether Epstein-related documents mentioning Trump were improperly withheld from public releases</div>
-        <div class="ticker-item">Supreme Court ruled against signature tariff policy — Democrats vow to block extension of 15% global tariffs beyond 150-day window</div>
+    <!-- NEWS TICKER -->
+    <div
+      class="ticker-bar"
+      id="ticker-bar"
+      aria-label="Breaking news ticker"
+      style="display: none"
+    >
+      <div class="ticker-label"><span></span>Breaking</div>
+      <div class="ticker-track" id="ticker-track"></div>
     </div>
-</div>
 
-<nav>
-    <div class="nav-center">
+    <nav>
+      <div class="nav-center">
         <div class="nav-rule"></div>
         <div class="nav-content">
-            <a href="#hero" class="nav-main-name">Victor Quan</a>
-            <span class="nav-dot">•</span>
-            <a href="about.html" class="nav-sub">About</a>
-            <span class="nav-dot">•</span>
-            <a href="#skills" class="nav-sub">Skills</a>
-            <span class="nav-dot">•</span>
-            <a href="#projects" class="nav-sub">Work</a>
+          <a href="#hero" class="nav-main-name">Victor Quan</a>
+          <span class="nav-dot">•</span>
+          <a href="about.html" class="nav-sub">About</a>
+          <span class="nav-dot">•</span>
+          <a href="about.html" class="nav-sub">Work</a>
         </div>
         <div class="nav-rule"></div>
-    </div>
-</nav>
+      </div>
+    </nav>
 
-<!-- HERO -->
-<section id="hero">
-    <div class="hero-inner">
-        <h1 class="hero-name">Hello World,<br>I'm Victor</h1>
+    <!-- HERO -->
+    <section id="hero">
+      <div class="hero-inner">
+        <h1 class="hero-name">Hello World,<br />I'm Victor</h1>
         <p class="hero-tagline">Welcome to my crib.</p>
-    </div>
-</section>
+        <div class="spotify-label reveal">Currently Listening</div>
+        <div id="spotify-widget" class="reveal"></div>
+      </div>
+    </section>
 
-<!-- SKILLS -->
-<section id="skills">
-    <div class="section-inner">
-        <div class="section-label reveal">Skills</div>
-        <div class="skills-grid reveal">
-            <div class="skill-group">
-                <div class="skill-group-title">Languages</div>
-                <div class="skill-tags">
-                    <span class="tag">JavaScript</span>
-                    <span class="tag">TypeScript</span>
-                    <span class="tag">Python</span>
-                    <span class="tag">Go</span>
-                    <span class="tag">SQL</span>
-                </div>
-            </div>
-            <div class="skill-group">
-                <div class="skill-group-title">Frontend</div>
-                <div class="skill-tags">
-                    <span class="tag">React</span>
-                    <span class="tag">Next.js</span>
-                    <span class="tag">Vue</span>
-                    <span class="tag">CSS / SCSS</span>
-                    <span class="tag">Figma</span>
-                </div>
-            </div>
-            <div class="skill-group">
-                <div class="skill-group-title">Backend</div>
-                <div class="skill-tags">
-                    <span class="tag">Node.js</span>
-                    <span class="tag">PostgreSQL</span>
-                    <span class="tag">REST</span>
-                    <span class="tag">GraphQL</span>
-                    <span class="tag">Redis</span>
-                </div>
-            </div>
-            <div class="skill-group">
-                <div class="skill-group-title">Infrastructure</div>
-                <div class="skill-tags">
-                    <span class="tag">AWS</span>
-                    <span class="tag">Docker</span>
-                    <span class="tag">Kubernetes</span>
-                    <span class="tag">CI/CD</span>
-                    <span class="tag">Terraform</span>
-                </div>
-            </div>
-            <div class="skill-group">
-                <div class="skill-group-title">Tools</div>
-                <div class="skill-tags">
-                    <span class="tag">Git</span>
-                    <span class="tag">Linux</span>
-                    <span class="tag">Vim</span>
-                    <span class="tag">Jest</span>
-                    <span class="tag">Vite</span>
-                </div>
-            </div>
-            <div class="skill-group">
-                <div class="skill-group-title">Practices</div>
-                <div class="skill-tags">
-                    <span class="tag">TDD</span>
-                    <span class="tag">Code Review</span>
-                    <span class="tag">Agile</span>
-                    <span class="tag">System Design</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-icons">
+        <a href="https://github.com" target="_blank" aria-label="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+        <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+        </a>
+        <a href="https://twitter.com" target="_blank" aria-label="Twitter">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="/cdn-cgi/l/email-protection#354c5a40755058545c591b565a58" aria-label="Email">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </a>
+      </div>
+      <div class="footer-copy">Victor Quan · © 2026 · Portfolio</div>
+    </footer>
 
-<!-- PROJECTS -->
-<section id="projects">
-    <div class="section-inner">
-        <div class="section-label reveal">Selected Work</div>
-        <div class="projects-list">
-
-            <a href="#" class="project-item reveal">
-                <div>
-                    <div class="project-num">01</div>
-                    <div class="project-title">Project Alpha</div>
-                    <div class="project-desc">A brief description of what this project does, the problem it solves, and the impact it had. Keep it to 2–3 sentences.</div>
-                </div>
-                <div class="project-meta">
-                    <span class="project-arrow">↗</span>
-                    <div>
-                        <div class="project-year">2024</div>
-                        <div class="project-tags">
-                            <span class="project-tag">React</span>
-                            <span class="project-tag">Node.js</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-            <a href="#" class="project-item reveal">
-                <div>
-                    <div class="project-num">02</div>
-                    <div class="project-title">Project Beta</div>
-                    <div class="project-desc">Describe the technical challenge, your approach, and the outcome. What stack did you use? What was the scale?</div>
-                </div>
-                <div class="project-meta">
-                    <span class="project-arrow">↗</span>
-                    <div>
-                        <div class="project-year">2024</div>
-                        <div class="project-tags">
-                            <span class="project-tag">Python</span>
-                            <span class="project-tag">AWS</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-            <a href="#" class="project-item reveal">
-                <div>
-                    <div class="project-num">03</div>
-                    <div class="project-title">Project Gamma</div>
-                    <div class="project-desc">Open-source tool / side project / client work. Show off something that reflects your engineering instincts and taste.</div>
-                </div>
-                <div class="project-meta">
-                    <span class="project-arrow">↗</span>
-                    <div>
-                        <div class="project-year">2023</div>
-                        <div class="project-tags">
-                            <span class="project-tag">Go</span>
-                            <span class="project-tag">Docker</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-            <a href="#" class="project-item reveal">
-                <div>
-                    <div class="project-num">04</div>
-                    <div class="project-title">Project Delta</div>
-                    <div class="project-desc">Another project that highlights a different part of your skillset. Maybe something more experimental or exploratory.</div>
-                </div>
-                <div class="project-meta">
-                    <span class="project-arrow">↗</span>
-                    <div>
-                        <div class="project-year">2023</div>
-                        <div class="project-tags">
-                            <span class="project-tag">TypeScript</span>
-                            <span class="project-tag">GraphQL</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-        </div>
-    </div>
-</section>
-
-<!-- LISTENING -->
-<section id="listening">
-    <div class="section-inner">
-        <div class="section-label reveal">Listening</div>
-
-        <div id="now-playing-wrap" style="display:none" class="reveal">
-            <div class="listening-status">
-                <span class="listening-dot"></span>
-                <span class="listening-label">Now playing</span>
-            </div>
-            <div id="now-playing-track" class="track-list"></div>
-        </div>
-
-        <div id="recently-played-list" class="track-list"></div>
-    </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-    <div class="footer-copy">© 2026 Victor Quan. Built with care.</div>
-    <div class="footer-links">
-        <a href="https://github.com" target="_blank">GitHub</a>
-        <a href="https://linkedin.com" target="_blank">LinkedIn</a>
-        <a href="https://twitter.com" target="_blank">Twitter</a>
-        <a href="/cdn-cgi/l/email-protection#354c5a40755058545c591b565a58">Email</a>
-    </div>
-</footer>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // Cursor dot
-    const cursor = document.getElementById('cursor');
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-    });
-    document.addEventListener('mouseenter', () => cursor.style.opacity = 1);
-    document.addEventListener('mouseleave', () => cursor.style.opacity = 0);
-
-    // Scroll reveal
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), 0);
-        }
+    <script
+      data-cfasync="false"
+      src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
+    ></script>
+    <script>
+      // Cursor dot
+      const cursor = document.getElementById("cursor");
+      document.addEventListener("mousemove", (e) => {
+        cursor.style.left = e.clientX + "px";
+        cursor.style.top = e.clientY + "px";
       });
-    }, { threshold: 0.1 });
+      document.addEventListener("mouseenter", () => (cursor.style.opacity = 1));
+      document.addEventListener("mouseleave", () => (cursor.style.opacity = 0));
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      // Scroll reveal
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+              setTimeout(() => entry.target.classList.add("visible"), 0);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
 
-    // Stagger child reveals in grids
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => observer.observe(el));
 
-    // ── SPOTIFY ──────────────────────────────────────────────────────────────
-    const SPOTIFY_API = 'https://spotify-backend-production-265b.up.railway.app';
+      // Stagger child reveals in grids
 
-    function escHtml(str) {
-        return String(str ?? '')
-            .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-    }
+      // ── SPOTIFY ──────────────────────────────────────────────────────────────
+      const SPOTIFY_API =
+        "https://spotify-backend-production-265b.up.railway.app";
 
-    function formatRelativeTime(iso) {
-        const diff = Date.now() - new Date(iso).getTime();
-        const m = Math.floor(diff / 60000);
-        if (m < 1)  return 'just now';
-        if (m < 60) return `${m}m ago`;
-        const h = Math.floor(m / 60);
-        if (h < 24) return `${h}h ago`;
-        return `${Math.floor(h / 24)}d ago`;
-    }
+      function escHtml(str) {
+        return String(str ?? "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
 
-    function buildTrackRow(track, playedAt) {
-        const art = track.albumArt
-            ? `<img class="track-art" src="${escHtml(track.albumArt)}" alt="">`
-            : `<div class="track-art-placeholder"></div>`;
-        const time = playedAt ? `<div class="track-time">${escHtml(formatRelativeTime(playedAt))}</div>` : '';
-        return `
-            <a href="${escHtml(track.url || '#')}" target="_blank" rel="noopener" class="track-row">
-                ${art}
-                <div class="track-details">
-                    <div class="track-title">${escHtml(track.title)}</div>
-                    <div class="track-artist">${escHtml(track.artist)}</div>
-                </div>
-                ${time}
-            </a>`;
-    }
+      function fmtMs(ms) {
+        const s = Math.floor(ms / 1000);
+        return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+      }
 
-    function renderNowPlaying(data) {
-        if (!data.isPlaying || !data.title) return;
-        const wrap = document.getElementById('now-playing-wrap');
-        document.getElementById('now-playing-track').innerHTML = buildTrackRow(data, null);
-        wrap.style.display = 'block';
-    }
+      let _elapsedTimer = null;
+      let _elapsedStart = null;
 
-    function renderRecentlyPlayed(tracks) {
+      function startElapsedTick(durationMs, startMs = 0) {
+        if (_elapsedTimer) clearInterval(_elapsedTimer);
+        _elapsedStart = Date.now() - startMs;
+        _elapsedTimer = setInterval(() => {
+          const el = document.getElementById("spotify-elapsed");
+          if (!el) {
+            clearInterval(_elapsedTimer);
+            return;
+          }
+          el.textContent = fmtMs(
+            Math.min(Date.now() - _elapsedStart, durationMs),
+          );
+        }, 1000);
+      }
+
+      function renderWidget(html) {
+        document.getElementById("spotify-widget").innerHTML = html;
+      }
+
+      function artEl(url) {
+        return url
+          ? `<img class="spotify-art" src="${escHtml(url)}" alt="">`
+          : `<div class="spotify-art-placeholder"></div>`;
+      }
+
+      function showNowPlaying(data) {
+        if (!data.isPlaying || !data.title) return false;
+        const progressMs = data.progressMs || 0;
+        const timeHtml = data.durationMs
+          ? `<div class="spotify-time"><span id="spotify-elapsed">${escHtml(fmtMs(progressMs))}</span> / ${escHtml(fmtMs(data.durationMs))}</div>`
+          : "";
+        renderWidget(
+          `<div class="spotify-card">` +
+            `<div class="spotify-inner">` +
+            artEl(data.albumArt) +
+            `<div class="spotify-text">` +
+            `<div class="spotify-title">${escHtml(data.title)}</div>` +
+            `<div class="spotify-meta">${escHtml(data.artist)} · ${escHtml(data.album)}</div>` +
+            timeHtml +
+            `</div></div></div>`,
+        );
+        if (data.durationMs) startElapsedTick(data.durationMs, progressMs);
+        return true;
+      }
+
+      function showRecentlyPlayed(tracks) {
         if (!tracks || !tracks.length) return;
-        document.getElementById('recently-played-list').innerHTML =
-            tracks.map(t => buildTrackRow(t, t.playedAt)).join('');
-    }
+        const t = tracks[0];
+        renderWidget(
+          `<div class="spotify-card">` +
+            `<div class="spotify-inner">` +
+            artEl(t.albumArt) +
+            `<div class="spotify-text">` +
+            `<div class="spotify-title">${escHtml(t.title)}</div>` +
+            `<div class="spotify-meta">${escHtml(t.artist)} · ${escHtml(t.album)}</div>` +
+            `<div class="spotify-time spotify-note">recently played</div>` +
+            `</div></div></div>`,
+        );
+      }
 
-    async function loadSpotify() {
+      async function loadSpotify() {
         try {
-            const [npRes, rpRes] = await Promise.all([
-                fetch(`${SPOTIFY_API}/spotify/now-playing`),
-                fetch(`${SPOTIFY_API}/spotify/recently-played`)
-            ]);
-            if (npRes.ok) renderNowPlaying(await npRes.json());
-            if (rpRes.ok) renderRecentlyPlayed(await rpRes.json());
+          const npRes = await fetch(`${SPOTIFY_API}/spotify/now-playing`);
+          if (npRes.ok && showNowPlaying(await npRes.json())) return;
+          const rpRes = await fetch(`${SPOTIFY_API}/spotify/recently-played`);
+          if (rpRes.ok) showRecentlyPlayed(await rpRes.json());
         } catch {
-            document.getElementById('listening').style.display = 'none';
+          /* render nothing */
         }
-    }
+      }
 
-    loadSpotify();
-    setInterval(async () => {
+      // ── NEWS TICKER ──────────────────────────────────────────────────────────
+      async function loadTicker() {
         try {
-            const res = await fetch(`${SPOTIFY_API}/spotify/now-playing`);
-            if (res.ok) renderNowPlaying(await res.json());
-        } catch { /* ignore */ }
-    }, 30000);
-</script>
-</body>
+          const res = await fetch(`${SPOTIFY_API}/news/headlines`);
+          if (!res.ok) return;
+          const headlines = await res.json();
+          if (!headlines.length) return;
+          const items = headlines
+            .map((h) => `<div class="ticker-item">${escHtml(h)}</div>`)
+            .join("");
+          document.getElementById("ticker-track").innerHTML = items + items;
+          document.getElementById("ticker-bar").style.display = "flex";
+        } catch {
+          /* hide ticker, render nothing */
+        }
+      }
+      loadTicker();
+
+      loadSpotify();
+      setInterval(async () => {
+        try {
+          const npRes = await fetch(`${SPOTIFY_API}/spotify/now-playing`);
+          if (!npRes.ok) return;
+          const data = await npRes.json();
+          if (data.isPlaying && data.title) {
+            showNowPlaying(data);
+          } else {
+            if (_elapsedTimer) {
+              clearInterval(_elapsedTimer);
+              _elapsedTimer = null;
+            }
+            const rpRes = await fetch(`${SPOTIFY_API}/spotify/recently-played`);
+            if (rpRes.ok) showRecentlyPlayed(await rpRes.json());
+          }
+        } catch {
+          /* ignore */
+        }
+      }, 10000);
+    </script>
+  </body>
 </html>
-    documen
