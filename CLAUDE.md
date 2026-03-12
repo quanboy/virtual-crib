@@ -14,7 +14,7 @@ Victor Quan's personal portfolio website. Two static HTML pages (`portfolio.html
 
 **Backend** (`spotify-backend/`)
 - Spring Boot 3.2 / Java 17
-- Caffeine caching (30s now-playing, 120s recently-played, 600s headlines)
+- Caffeine caching (10s now-playing, 120s recently-played, 600s headlines)
 - Deployed on Railway
 
 ## Development
@@ -81,7 +81,7 @@ All styles in `styles/main.css`, organized by section comment headers:
 - `BASE` — global defaults
 - `ANIMATIONS` — keyframes
 - `NAV` — navigation bar
-- `HERO / ABOUT / SKILLS / PROJECTS / FOOTER`
+- `HERO / ABOUT / SKILLS / PROJECTS / FOOTER` — Skills and Projects sections exist in CSS but are removed from `portfolio.html`
 - `NEWS TICKER` — fixed scrolling bar at top
 - `LISTENING / SPOTIFY` — now-playing + recently-played widget
 - `SCROLL REVEAL` — IntersectionObserver fade-in
@@ -105,17 +105,17 @@ All styles in `styles/main.css`, organized by section comment headers:
 All JS is inline in the HTML files:
 - **Custom cursor** — mousemove listener on `.cursor`
 - **Scroll reveal** — `IntersectionObserver` adds `.visible` class
-- **Spotify widget** — fetches `/spotify/now-playing` and `/spotify/recently-played` on load, polls now-playing every 30s. Backend URL is `const SPOTIFY_API` at the top of the script block in `portfolio.html`. Currently set to the Railway URL.
+- **Spotify widget** — fetches `/spotify/now-playing` and `/spotify/recently-played` on load, polls now-playing every 10s. Backend URL is `const SPOTIFY_API` at the top of the script block in `portfolio.html`. Currently set to the Railway URL. `progressMs` is extracted at the top level of the now-playing response and passed through to seed the elapsed timer accurately.
 
 ## Spotify API Endpoints
 
 | Endpoint | Returns | Cache |
 |---|---|---|
-| `GET /spotify/now-playing` | Current track or `{isPlaying: false}` | 30s |
+| `GET /spotify/now-playing` | Current track or `{isPlaying: false}` | 10s |
 | `GET /spotify/recently-played` | Last 6 tracks with `playedAt` | 120s |
 | `GET /spotify/random-track` | Random track from saved library | None |
 
-Track object fields: `isPlaying`, `title`, `id`, `artist`, `album`, `albumArt`, `url`, `previewUrl`, `durationMs`.
+Track object fields: `isPlaying`, `title`, `id`, `artist`, `album`, `albumArt`, `url`, `previewUrl`, `durationMs`, `progressMs` (now-playing only).
 
 ## News API Endpoints
 
@@ -159,11 +159,15 @@ The running instance is updated immediately after step 2 (no restart needed); en
 
 ## Status
 
-**Working:** Spotify widget live in `portfolio.html` — fetches now-playing + recently-played from Railway backend. Footer copyright updated to Victor Quan 2026. News ticker endpoint (`/news/headlines`) implemented; `NEWS_API_KEY` set locally via `application-local.properties`.
+**Working:**
+- Spotify widget live in `portfolio.html` — fetches now-playing + recently-played from Railway backend, polls every 10s, elapsed timer seeded from `progressMs`
+- News ticker endpoint (`/news/headlines`) implemented; `NEWS_API_KEY` set locally via `application-local.properties`
+- Footer redesigned: centered, SVG icons (GitHub, LinkedIn, Twitter/X, Email) + `Victor Quan · © 2026 · Portfolio` text line
+- Hero: italic DM Sans tagline, frosted glass Spotify card (warm beige tint), sticky footer layout
 
 **Still needs personalization:**
-- `about.html` — bio text (`[your current project or role]`, `[Company A]`, `[Company B]`, interests), location, years of experience
-- `portfolio.html` — project names, descriptions, links (currently Alpha/Beta/Gamma/Delta), GitHub/LinkedIn/Twitter URLs in footer
+- `about.html` — bio text, location, years of experience, real company names
+- `portfolio.html` — real GitHub/LinkedIn/Twitter URLs in footer icons
 
 **Still needs doing:**
 - Deploy frontend to static host, then set `ALLOWED_ORIGINS` in Railway
