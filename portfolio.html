@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>victor quan.</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/main.css">
@@ -13,24 +14,9 @@
 <div class="cursor" id="cursor"></div>
 
 <!-- NEWS TICKER -->
-<div class="ticker-bar" aria-label="Breaking news ticker">
+<div class="ticker-bar" id="ticker-bar" aria-label="Breaking news ticker" style="display:none">
     <div class="ticker-label"><span></span>Breaking</div>
-    <div class="ticker-track" id="ticker-track">
-        <div class="ticker-item">Blacklists Anthropic from government work — Pentagon severs $200M contract with Claude AI maker after company refuses to lift all safeguards</div>
-        <div class="ticker-item">Speaks in Corpus Christi, TX — Teases third term: "We're entitled to it" — declines to endorse in Texas Senate race</div>
-        <div class="ticker-item">Acknowledges "difficult choice" on Iran after failed diplomacy — US Central Command briefs president on military options</div>
-        <div class="ticker-item">Pro-Trump activists circulate draft executive order seeking to declare national emergency over 2020 election, seeking extraordinary power over voting</div>
-        <div class="ticker-item">State of the Union clocks in at 108 minutes — longest presidential address in at least 60 years — clashes with Democratic lawmakers</div>
-        <div class="ticker-item">DOJ reviewing whether Epstein-related documents mentioning Trump were improperly withheld from public releases</div>
-        <div class="ticker-item">Supreme Court ruled against signature tariff policy — Democrats vow to block extension of 15% global tariffs beyond 150-day window</div>
-        <div class="ticker-item">Blacklists Anthropic from government work — Pentagon severs $200M contract with Claude AI maker after company refuses to lift all safeguards</div>
-        <div class="ticker-item">Speaks in Corpus Christi, TX — Teases third term: "We're entitled to it" — declines to endorse in Texas Senate race</div>
-        <div class="ticker-item">Acknowledges "difficult choice" on Iran after failed diplomacy — US Central Command briefs president on military options</div>
-        <div class="ticker-item">Pro-Trump activists circulate draft executive order seeking to declare national emergency over 2020 election, seeking extraordinary power over voting</div>
-        <div class="ticker-item">State of the Union clocks in at 108 minutes — longest presidential address in at least 60 years — clashes with Democratic lawmakers</div>
-        <div class="ticker-item">DOJ reviewing whether Epstein-related documents mentioning Trump were improperly withheld from public releases</div>
-        <div class="ticker-item">Supreme Court ruled against signature tariff policy — Democrats vow to block extension of 15% global tariffs beyond 150-day window</div>
-    </div>
+    <div class="ticker-track" id="ticker-track"></div>
 </div>
 
 <nav>
@@ -54,6 +40,8 @@
     <div class="hero-inner">
         <h1 class="hero-name">Hello World,<br>I'm Victor</h1>
         <p class="hero-tagline">Welcome to my crib.</p>
+        <div class="spotify-label reveal">Currently Listening</div>
+        <div id="spotify-widget" class="reveal"></div>
     </div>
 </section>
 
@@ -207,23 +195,6 @@
     </div>
 </section>
 
-<!-- LISTENING -->
-<section id="listening">
-    <div class="section-inner">
-        <div class="section-label reveal">Listening</div>
-
-        <div id="now-playing-wrap" style="display:none" class="reveal">
-            <div class="listening-status">
-                <span class="listening-dot"></span>
-                <span class="listening-label">Now playing</span>
-            </div>
-            <div id="now-playing-track" class="track-list"></div>
-        </div>
-
-        <div id="recently-played-list" class="track-list"></div>
-    </div>
-</section>
-
 <!-- FOOTER -->
 <footer>
     <div class="footer-copy">© 2026 Victor Quan. Built with care.</div>
@@ -267,63 +238,99 @@
             .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
-    function formatRelativeTime(iso) {
-        const diff = Date.now() - new Date(iso).getTime();
-        const m = Math.floor(diff / 60000);
-        if (m < 1)  return 'just now';
-        if (m < 60) return `${m}m ago`;
-        const h = Math.floor(m / 60);
-        if (h < 24) return `${h}h ago`;
-        return `${Math.floor(h / 24)}d ago`;
+    function fmtMs(ms) {
+        const s = Math.floor(ms / 1000);
+        return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
     }
 
-    function buildTrackRow(track, playedAt) {
-        const art = track.albumArt
-            ? `<img class="track-art" src="${escHtml(track.albumArt)}" alt="">`
-            : `<div class="track-art-placeholder"></div>`;
-        const time = playedAt ? `<div class="track-time">${escHtml(formatRelativeTime(playedAt))}</div>` : '';
-        return `
-            <a href="${escHtml(track.url || '#')}" target="_blank" rel="noopener" class="track-row">
-                ${art}
-                <div class="track-details">
-                    <div class="track-title">${escHtml(track.title)}</div>
-                    <div class="track-artist">${escHtml(track.artist)}</div>
-                </div>
-                ${time}
-            </a>`;
+    let _elapsedTimer = null;
+    let _elapsedStart = null;
+
+    function startElapsedTick(durationMs) {
+        if (_elapsedTimer) clearInterval(_elapsedTimer);
+        _elapsedStart = Date.now();
+        _elapsedTimer = setInterval(() => {
+            const el = document.getElementById('spotify-elapsed');
+            if (!el) { clearInterval(_elapsedTimer); return; }
+            el.textContent = fmtMs(Math.min(Date.now() - _elapsedStart, durationMs));
+        }, 1000);
     }
 
-    function renderNowPlaying(data) {
-        if (!data.isPlaying || !data.title) return;
-        const wrap = document.getElementById('now-playing-wrap');
-        document.getElementById('now-playing-track').innerHTML = buildTrackRow(data, null);
-        wrap.style.display = 'block';
+    function renderWidget(html) {
+        document.getElementById('spotify-widget').innerHTML = html;
     }
 
-    function renderRecentlyPlayed(tracks) {
+    function artEl(url) {
+        return url
+            ? `<img class="spotify-art" src="${escHtml(url)}" alt="">`
+            : `<div class="spotify-art-placeholder"></div>`;
+    }
+
+    function showNowPlaying(data) {
+        if (!data.isPlaying || !data.title) return false;
+        const dur = data.durationMs ? ` / ${fmtMs(data.durationMs)}` : '';
+        renderWidget(
+            `<div class="spotify-inner">` +
+            artEl(data.albumArt) +
+            `<div class="spotify-text">` +
+            `<div class="spotify-title">${escHtml(data.title)}</div>` +
+            `<div class="spotify-meta">${escHtml(data.artist)} · ${escHtml(data.album)}` +
+            (data.durationMs ? `&ensp;<span id="spotify-elapsed">0:00</span>${escHtml(dur)}` : '') +
+            `</div></div></div>`
+        );
+        if (data.durationMs) startElapsedTick(data.durationMs);
+        return true;
+    }
+
+    function showRecentlyPlayed(tracks) {
         if (!tracks || !tracks.length) return;
-        document.getElementById('recently-played-list').innerHTML =
-            tracks.map(t => buildTrackRow(t, t.playedAt)).join('');
+        const t = tracks[0];
+        renderWidget(
+            `<div class="spotify-inner">` +
+            artEl(t.albumArt) +
+            `<div class="spotify-text">` +
+            `<div class="spotify-title">${escHtml(t.title)}</div>` +
+            `<div class="spotify-meta">${escHtml(t.artist)} · ${escHtml(t.album)}&ensp;<span class="spotify-note">recently played</span></div>` +
+            `</div></div>`
+        );
     }
 
     async function loadSpotify() {
         try {
-            const [npRes, rpRes] = await Promise.all([
-                fetch(`${SPOTIFY_API}/spotify/now-playing`),
-                fetch(`${SPOTIFY_API}/spotify/recently-played`)
-            ]);
-            if (npRes.ok) renderNowPlaying(await npRes.json());
-            if (rpRes.ok) renderRecentlyPlayed(await rpRes.json());
-        } catch {
-            document.getElementById('listening').style.display = 'none';
-        }
+            const npRes = await fetch(`${SPOTIFY_API}/spotify/now-playing`);
+            if (npRes.ok && showNowPlaying(await npRes.json())) return;
+            const rpRes = await fetch(`${SPOTIFY_API}/spotify/recently-played`);
+            if (rpRes.ok) showRecentlyPlayed(await rpRes.json());
+        } catch { /* render nothing */ }
     }
+
+    // ── NEWS TICKER ──────────────────────────────────────────────────────────
+    async function loadTicker() {
+        try {
+            const res = await fetch(`${SPOTIFY_API}/news/headlines`);
+            if (!res.ok) return;
+            const headlines = await res.json();
+            if (!headlines.length) return;
+            const items = headlines.map(h => `<div class="ticker-item">${escHtml(h)}</div>`).join('');
+            document.getElementById('ticker-track').innerHTML = items + items;
+            document.getElementById('ticker-bar').style.display = 'flex';
+        } catch { /* hide ticker, render nothing */ }
+    }
+    loadTicker();
 
     loadSpotify();
     setInterval(async () => {
         try {
-            const res = await fetch(`${SPOTIFY_API}/spotify/now-playing`);
-            if (res.ok) renderNowPlaying(await res.json());
+            const npRes = await fetch(`${SPOTIFY_API}/spotify/now-playing`);
+            if (!npRes.ok) return;
+            const data = await npRes.json();
+            if (data.isPlaying && data.title) {
+                showNowPlaying(data);
+            } else {
+                if (_elapsedTimer) { clearInterval(_elapsedTimer); _elapsedTimer = null; }
+                const rpRes = await fetch(`${SPOTIFY_API}/spotify/recently-played`);
+                if (rpRes.ok) showRecentlyPlayed(await rpRes.json());
+            }
         } catch { /* ignore */ }
     }, 30000);
 </script>
