@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — Victor Quan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- NEWS TICKER -->
+<div class="ticker-bar" aria-label="Breaking news ticker">
+    <div class="ticker-label"><span></span>Breaking</div>
+    <div class="ticker-track" id="ticker-track">
+        <div class="ticker-item"><strong>TRUMP</strong> Blacklists Anthropic from government work — Pentagon severs $200M contract with Claude AI maker after company refuses to lift all safeguards</div>
+        <div class="ticker-item"><strong>TRUMP</strong> Speaks in Corpus Christi, TX — Teases third term: "We're entitled to it" — declines to endorse in Texas Senate race</div>
+        <div class="ticker-item"><strong>TRUMP</strong> Acknowledges "difficult choice" on Iran after failed diplomacy — US Central Command briefs president on military options</div>
+        <div class="ticker-item"><strong>TRUMP</strong> Pro-Trump activists circulate draft executive order seeking to declare national emergency over 2020 election, seeking extraordinary power over voting</div>
+        <div class="ticker-item"><strong>TRUMP</strong> State of the Union clocks in at 108 minutes — longest presidential address in at least 60 years — clashes with Democratic lawmakers</div>
+        <div class="ticker-item"><strong>TRUMP</strong> DOJ reviewing whether Epstein-related documents mentioning Trump were improperly withheld from public releases</div>
+        <div class="ticker-item"><strong>TRUMP</strong> Supreme Court ruled against signature tariff policy — Democrats vow to block extension of 15% global tariffs beyond 150-day window</div>
+        <div class="ticker-item"><strong>TRUMP</strong> Blacklists Anthropic from government work — Pentagon severs $200M contract with Claude AI maker after company refuses to lift all safeguards</div>
+        <div class="ticker-item"><strong>TRUMP</strong> Speaks in Corpus Christi, TX — Teases third term: "We're entitled to it" — declines to endorse in Texas Senate race</div>
+        <div class="ticker-item"><strong>TRUMP</strong> Acknowledges "difficult choice" on Iran after failed diplomacy — US Central Command briefs president on military options</div>
+        <div class="ticker-item"><strong>TRUMP</strong> Pro-Trump activists circulate draft executive order seeking to declare national emergency over 2020 election, seeking extraordinary power over voting</div>
+        <div class="ticker-item"><strong>TRUMP</strong> State of the Union clocks in at 108 minutes — longest presidential address in at least 60 years — clashes with Democratic lawmakers</div>
+        <div class="ticker-item"><strong>TRUMP</strong> DOJ reviewing whether Epstein-related documents mentioning Trump were improperly withheld from public releases</div>
+        <div class="ticker-item"><strong>TRUMP</strong> Supreme Court ruled against signature tariff policy — Democrats vow to block extension of 15% global tariffs beyond 150-day window</div>
+    </div>
+</div>
+
+<nav>
+    <div class="nav-center">
+        <div class="nav-rule"></div>
+        <div class="nav-content">
+            <a href="portfolio.html" class="nav-main-name">Victor Quan</a>
+            <span class="nav-dot">•</span>
+            <a href="about.html" class="nav-sub">About</a>
+            <span class="nav-dot">•</span>
+            <a href="portfolio.html#skills" class="nav-sub">Skills</a>
+            <span class="nav-dot">•</span>
+            <a href="portfolio.html#projects" class="nav-sub">Work</a>
+        </div>
+        <div class="nav-rule"></div>
+    </div>
+</nav>
+
+<!-- ABOUT -->
+<section id="about">
+    <div class="section-inner">
+        <div class="section-label reveal">About</div>
+        <div class="about-grid">
+            <div class="about-text reveal">
+                <p>I'm a software engineer who loves turning complex problems into simple, elegant solutions. I care about the details — performant code, clean architecture, and intuitive experiences.</p>
+                <p>Currently working on [your current project or role]. Previously at [Company A] and [Company B], where I shipped products used by thousands of people.</p>
+                <p>Outside of code, I'm into [your interest], [your interest], and good coffee.</p>
+            </div>
+            <div class="about-meta reveal">
+                <div class="meta-item">
+                    <div class="meta-label">Location</div>
+                    <div class="meta-value">Your City, Country</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Experience</div>
+                    <div class="meta-value">X+ Years</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Focus</div>
+                    <div class="meta-value">Full-Stack Development</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Status</div>
+                    <div class="meta-value">Open to Opportunities</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-copy">© 2026 Victor Quan. Built with care.</div>
+    <div class="footer-links">
+        <a href="https://github.com" target="_blank">GitHub</a>
+        <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+        <a href="https://twitter.com" target="_blank">Twitter</a>
+    </div>
+</footer>
+
+<script>
+    // Cursor dot
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+    document.addEventListener('mouseenter', () => cursor.style.opacity = 1);
+    document.addEventListener('mouseleave', () => cursor.style.opacity = 0);
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), 0);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
