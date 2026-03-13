@@ -82,8 +82,8 @@ All styles in `styles/main.css`, organized by section comment headers:
 - `ANIMATIONS` — keyframes
 - `NAV` — navigation bar
 - `HERO / ABOUT / SKILLS / PROJECTS / FOOTER` — Skills and Projects sections exist in CSS but are removed from `portfolio.html`
-- `NEWS TICKER` — fixed scrolling bar at top
-- `LISTENING / SPOTIFY` — now-playing + recently-played widget
+- `NEWS TICKER` — fixed scrolling bar at top (font size 0.88rem)
+- `LISTENING / SPOTIFY` — now-playing + recently-played widget (card layout: album art stacked above text, centered; card max-width 240px; art 180×180px)
 - `SCROLL REVEAL` — IntersectionObserver fade-in
 - `CURSOR` — custom dot cursor
 - `RESPONSIVE` — single breakpoint at `768px`
@@ -105,7 +105,10 @@ All styles in `styles/main.css`, organized by section comment headers:
 All JS is inline in the HTML files:
 - **Custom cursor** — mousemove listener on `.cursor`
 - **Scroll reveal** — `IntersectionObserver` adds `.visible` class
-- **Spotify widget** — fetches `/spotify/now-playing` and `/spotify/recently-played` on load, polls now-playing every 10s. Backend URL is `const SPOTIFY_API` at the top of the script block in `portfolio.html`. Currently set to the Railway URL. `progressMs` is extracted at the top level of the now-playing response and passed through to seed the elapsed timer accurately.
+- **Spotify widget** — fetches `/spotify/now-playing` and `/spotify/recently-played` on load, polls now-playing every 30s. Backend URL is `const SPOTIFY_API` at the top of the script block in `portfolio.html`. Currently set to the Railway URL. `progressMs` is extracted at the top level of the now-playing response and passed through to seed the elapsed timer accurately.
+  - **Paused track logic:** When now-playing returns `isPlaying: false` but still has track data (paused song), the frontend shows that track as "Recently Played" directly instead of fetching the `/recently-played` endpoint (which is cached 120s and may return a stale/different song).
+  - **Dynamic label:** The `#spotify-label` element above the widget switches between "Currently Listening" and "Recently Played" based on playback state.
+  - **Admin controls:** Hidden by default; activated via Shift+S pin input. Shows prev/play-pause/next buttons.
 
 ## Spotify API Endpoints
 
@@ -160,10 +163,18 @@ The running instance is updated immediately after step 2 (no restart needed); en
 ## Status
 
 **Working:**
-- Spotify widget live in `portfolio.html` — fetches now-playing + recently-played from Railway backend, polls every 10s, elapsed timer seeded from `progressMs`
+- Spotify widget live in `portfolio.html` — fetches now-playing + recently-played from Railway backend, polls every 30s, elapsed timer seeded from `progressMs`
 - News ticker endpoint (`/news/headlines`) implemented; `NEWS_API_KEY` set locally via `application-local.properties`
 - Footer redesigned: centered, SVG icons (GitHub, LinkedIn, Twitter/X, Email) + `Victor Quan · © 2026 · Portfolio` text line
-- Hero: italic DM Sans tagline, frosted glass Spotify card (warm beige tint), sticky footer layout
+- Hero: italic DM Sans tagline, frosted glass Spotify card (warm beige tint)
+
+**Layout design:**
+- Single-viewport layout: `body` has `height: 100vh` + `overflow: hidden` — no scrolling, all content visible at once
+- `body` padding-top: 90px (clears fixed ticker + fixed nav)
+- `#hero` uses `flex: 1` to fill remaining vertical space; content is vertically centered
+- Spotify card: album art (180×180) stacked above centered text, max-width 240px
+- Playback controls: 24×24 SVG icons, 1.5rem gap between buttons
+- Footer padding: 1.5rem
 
 **Still needs personalization:**
 - `about.html` — bio text, location, years of experience, real company names

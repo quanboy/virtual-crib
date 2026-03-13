@@ -32,12 +32,12 @@ body {
   font-weight: 300;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-  padding-top: 38px; /* clear fixed ticker */
+  overflow: hidden;
+  padding-top: 90px; /* clear fixed ticker + nav */
   text-align: center;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 #hero {
@@ -187,7 +187,8 @@ section {
 #hero {
   display: flex;
   align-items: center;
-  padding: 8rem 3rem 5rem;
+  justify-content: center;
+  padding: 1.5rem 3rem;
   border-bottom: 1px solid var(--line);
 }
 
@@ -466,7 +467,7 @@ section {
 /* ── FOOTER ── */
 
 footer {
-  padding: 5rem 3rem 3rem;
+  padding: 1.5rem 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -506,7 +507,7 @@ footer {
   z-index: 200;
   background: var(--fg);
   color: var(--bg);
-  height: 38px;
+  height: 48px;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -544,7 +545,7 @@ footer {
   display: flex;
   align-items: center;
   white-space: nowrap;
-  animation: tickerScroll 35s linear infinite;
+  animation: tickerScroll 40s linear infinite;
   will-change: transform;
 }
 .ticker-track:hover {
@@ -552,7 +553,7 @@ footer {
 }
 
 .ticker-item {
-  font-size: 0.72rem;
+  font-size: 0.88rem;
   letter-spacing: 0.03em;
   padding: 0 2.5rem;
   color: #e8e6de;
@@ -628,21 +629,21 @@ footer {
   border-radius: 18px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
   padding: 16px;
-  max-width: 420px;
-  width: 100%;
+  max-width: 240px;
   animation: fadeIn 0.4s ease both;
 }
 
 .spotify-inner {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   width: 100%;
 }
 
 .spotify-art {
-  width: 52px;
-  height: 52px;
+  width: 180px;
+  height: 180px;
   object-fit: cover;
   border-radius: 8px;
   flex-shrink: 0;
@@ -650,8 +651,8 @@ footer {
 }
 
 .spotify-art-placeholder {
-  width: 52px;
-  height: 52px;
+  width: 180px;
+  height: 180px;
   background: var(--tag-bg);
   border-radius: 8px;
   flex-shrink: 0;
@@ -659,8 +660,7 @@ footer {
 
 .spotify-text {
   min-width: 0;
-  text-align: left;
-  flex: 1;
+  text-align: center;
 }
 
 .spotify-title {
@@ -695,6 +695,42 @@ footer {
 
 .spotify-note {
   font-style: italic;
+}
+
+.spotify-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.spotify-ctrl {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  transition: color 0.15s;
+}
+
+.spotify-ctrl:hover {
+  color: var(--fg);
+}
+
+.admin-pin-input {
+  display: block;
+  margin-top: 0.5rem;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  outline: none;
+  font-family: "DM Mono", monospace;
+  font-size: 0.8rem;
+  color: var(--fg);
+  width: 100px;
+  padding: 2px 0;
 }
 
 /* ── RESPONSIVE ── */
