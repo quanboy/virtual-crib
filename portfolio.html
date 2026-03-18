@@ -237,6 +237,13 @@
         _isCurrentlyPlaying = false;
         document.getElementById("spotify-label").textContent = "Recently Played";
         const t = tracks[0];
+        const controlsHtml = _adminMode
+          ? `<div class="spotify-controls">` +
+            `<button class="spotify-ctrl" id="ctrl-prev">${SVG_SKIP_BACK}</button>` +
+            `<button class="spotify-ctrl" id="ctrl-play-pause">${SVG_PLAY}</button>` +
+            `<button class="spotify-ctrl" id="ctrl-next">${SVG_SKIP_FWD}</button>` +
+            `</div>`
+          : "";
         renderWidget(
           `<div class="spotify-card">` +
             `<div class="spotify-inner">` +
@@ -244,8 +251,10 @@
             `<div class="spotify-text">` +
             `<div class="spotify-title">${escHtml(t.title)}</div>` +
             `<div class="spotify-meta">${escHtml(t.artist)} · ${escHtml(t.album)}</div>` +
+            controlsHtml +
             `</div></div></div>`,
         );
+        if (_adminMode) bindControls();
       }
 
       function bindControls() {
@@ -257,9 +266,13 @@
             controlAction("previous", "POST"),
           );
         if (playPause)
-          playPause.addEventListener("click", () =>
-            controlAction("pause", "PUT"),
-          );
+          playPause.addEventListener("click", () => {
+            if (_isCurrentlyPlaying) {
+              controlAction("pause", "PUT");
+            } else {
+              controlAction("play", "PUT");
+            }
+          });
         if (next)
           next.addEventListener("click", () => controlAction("next", "POST"));
       }

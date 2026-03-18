@@ -108,7 +108,7 @@ All JS is inline in the HTML files:
 - **Spotify widget** — fetches `/spotify/now-playing` and `/spotify/recently-played` on load, polls now-playing every 30s. Backend URL is `const SPOTIFY_API` at the top of the script block in `portfolio.html`. Currently set to the Railway URL. `progressMs` is extracted at the top level of the now-playing response and passed through to seed the elapsed timer accurately.
   - **Paused track logic:** When now-playing returns `isPlaying: false` but still has track data (paused song), the frontend shows that track as "Recently Played" directly instead of fetching the `/recently-played` endpoint (which is cached 120s and may return a stale/different song).
   - **Dynamic label:** The `#spotify-label` element above the widget switches between "Currently Listening" and "Recently Played" based on playback state.
-  - **Admin controls:** Hidden by default; activated via Shift+S pin input. Shows prev/play-pause/next buttons.
+  - **Admin controls:** Hidden by default; activated via Shift+S pin input. Shows prev/play-pause/next buttons. Controls render in both `showNowPlaying` (with pause icon) and `showRecentlyPlayed` (with play icon), and the play/pause button toggles based on `_isCurrentlyPlaying`.
 
 ## Spotify API Endpoints
 
