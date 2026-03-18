@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Victor Quan's personal portfolio website. Two static HTML pages (`portfolio.html`, `about.html`) served as-is, backed by a Spring Boot service (`spotify-backend/`) that proxies the Spotify API.
+Victor Quan's personal portfolio website. Single-page layout in `portfolio.html` with About and Projects sections, plus a separate `projects.html` (unused). Backed by a Spring Boot service (`spotify-backend/`) that proxies the Spotify API.
 
 ## Stack
 
@@ -45,10 +45,11 @@ Local secrets go in `spotify-backend/src/main/resources/application-local.proper
 
 ```
 virtual-crib/
-├── portfolio.html            # Landing page — hero, skills, projects, listening widget
-├── about.html                # About page — bio, meta info
+├── portfolio.html            # Single-page site — hero, about, projects, listening widget
+├── about.html                # Legacy about page (content now in portfolio.html)
+├── projects.html             # Standalone projects page (unused, content now in portfolio.html)
 ├── styles/
-│   └── main.css              # All styles; shared by both pages
+│   └── main.css              # All styles
 ├── spotify-backend/          # Separate git repo, deployed to Railway
 │   ├── Dockerfile
 │   ├── pom.xml
@@ -80,10 +81,10 @@ All styles in `styles/main.css`, organized by section comment headers:
 - `RESET & VARIABLES` — CSS custom properties
 - `BASE` — global defaults
 - `ANIMATIONS` — keyframes
-- `NAV` — navigation bar
-- `HERO / ABOUT / SKILLS / PROJECTS / FOOTER` — Skills and Projects sections exist in CSS but are removed from `portfolio.html`
+- `NAV` — navigation bar (hidden; replaced by hero-links)
+- `HERO / ABOUT / PROJECTS / FOOTER` — all sections on single page
 - `NEWS TICKER` — fixed scrolling bar at top
-- `LISTENING / SPOTIFY` — now-playing + recently-played widget
+- `LISTENING / SPOTIFY` — now-playing + recently-played widget (dark Spotify miniplayer style, album art stacked above text)
 - `SCROLL REVEAL` — IntersectionObserver fade-in
 - `CURSOR` — custom dot cursor
 - `RESPONSIVE` — single breakpoint at `768px`
@@ -106,6 +107,8 @@ All JS is inline in the HTML files:
 - **Custom cursor** — mousemove listener on `.cursor`
 - **Scroll reveal** — `IntersectionObserver` adds `.visible` class
 - **Spotify widget** — fetches `/spotify/now-playing` and `/spotify/recently-played` on load, polls now-playing every 10s. Backend URL is `const SPOTIFY_API` at the top of the script block in `portfolio.html`. Currently set to the Railway URL. `progressMs` is extracted at the top level of the now-playing response and passed through to seed the elapsed timer accurately.
+  - **Dynamic label:** The `#spotify-label` element above the widget switches between "Currently Listening" and "Recently Played" based on playback state.
+  - **Admin controls:** Hidden by default; activated via Shift+S pin input (`101901`). Shows prev/play-pause/next buttons. Play/pause button toggles based on `_isCurrentlyPlaying`. Polling pauses while pin input is visible.
 
 ## Spotify API Endpoints
 
@@ -160,13 +163,16 @@ The running instance is updated immediately after step 2 (no restart needed); en
 ## Status
 
 **Working:**
-- Spotify widget live in `portfolio.html` — fetches now-playing + recently-played from Railway backend, polls every 10s, elapsed timer seeded from `progressMs`
-- News ticker endpoint (`/news/headlines`) implemented; `NEWS_API_KEY` set locally via `application-local.properties`
-- Footer redesigned: centered, SVG icons (GitHub, LinkedIn, Twitter/X, Email) + `Victor Quan · © 2026 · Portfolio` text line
-- Hero: italic DM Sans tagline, frosted glass Spotify card (warm beige tint), sticky footer layout
+- Single-page layout: hero → about → projects → footer, all in `portfolio.html`
+- Nav removed; "About" and "Projects" are anchor links below the hero heading
+- Spotify widget live — dark miniplayer style card, polls every 10s, elapsed timer seeded from `progressMs`
+- Admin controls (Shift+S) with prev/play-pause/next
+- News ticker below hero heading area, scrolls at 10s speed
+- About section with bio text and meta info (Location: Orlando, FL; Focus: Full-Stack Development; Currently: Data Coordinator)
+- Projects section with 3 projects listed
+- Footer: centered SVG icons (GitHub, LinkedIn, Twitter/X, Email) + copyright line with border-top separator
 
 **Still needs personalization:**
-- `about.html` — bio text, location, years of experience, real company names
 - `portfolio.html` — real GitHub/LinkedIn/Twitter URLs in footer icons
 
 **Still needs doing:**

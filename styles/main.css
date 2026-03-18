@@ -33,16 +33,13 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  padding-top: 38px; /* clear fixed ticker */
+  padding-top: 48px; /* clear fixed ticker */
   text-align: center;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-#hero {
-  flex: 1;
-}
 
 /* ── ANIMATIONS ── */
 
@@ -85,28 +82,20 @@ body {
 /* ── NAV ── */
 
 nav {
-  position: fixed;
-  top: 38px;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  background: var(--bg);
-  padding: 0 2rem;
+  display: none;
 }
 
 .nav-center {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.9rem 0 0;
+  padding: 0;
   width: fit-content;
   margin: 0 auto;
 }
 
 .nav-rule {
-  width: 100%;
-  height: 1px;
-  background: var(--line);
+  display: none;
 }
 
 .nav-content {
@@ -187,7 +176,7 @@ section {
 #hero {
   display: flex;
   align-items: center;
-  padding: 8rem 3rem 5rem;
+  padding: 2rem 3rem;
   border-bottom: 1px solid var(--line);
 }
 
@@ -216,6 +205,25 @@ section {
 .hero-name em {
   font-style: italic;
   font-family: "Inter", sans-serif;
+}
+
+.hero-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.hero-links .nav-sub {
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+}
+
+.hero-divider {
+  width: 1px;
+  height: 1.2rem;
+  background: var(--accent);
 }
 
 .hero-tagline {
@@ -466,11 +474,12 @@ section {
 /* ── FOOTER ── */
 
 footer {
-  padding: 5rem 3rem 3rem;
+  padding: 1.5rem 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  margin-top: auto;
 }
 
 .footer-icons {
@@ -503,7 +512,7 @@ footer {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 200;
+  z-index: 100;
   background: var(--fg);
   color: var(--bg);
   height: 38px;
@@ -544,7 +553,7 @@ footer {
   display: flex;
   align-items: center;
   white-space: nowrap;
-  animation: tickerScroll 35s linear infinite;
+  animation: tickerScroll 10s linear infinite;
   will-change: transform;
 }
 .ticker-track:hover {
@@ -621,55 +630,54 @@ footer {
 
 .spotify-card {
   display: inline-flex;
-  background: rgba(210, 196, 178, 0.45);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(210, 196, 178, 0.7);
-  border-radius: 18px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-  padding: 16px;
-  max-width: 420px;
-  width: 100%;
+  background: #282828;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  padding: 12px;
+  max-width: 240px;
   animation: fadeIn 0.4s ease both;
 }
 
 .spotify-inner {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
   width: 100%;
 }
 
 .spotify-art {
-  width: 52px;
-  height: 52px;
+  width: 210px;
+  height: 210px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 6px;
   flex-shrink: 0;
   display: block;
 }
 
 .spotify-art-placeholder {
-  width: 52px;
-  height: 52px;
-  background: var(--tag-bg);
-  border-radius: 8px;
+  width: 210px;
+  height: 210px;
+  background: #3e3e3e;
+  border-radius: 6px;
   flex-shrink: 0;
 }
 
 .spotify-text {
   min-width: 0;
   text-align: left;
-  flex: 1;
+  width: 100%;
+  padding: 0 2px;
 }
 
 .spotify-title {
   font-family: "Inter", sans-serif;
-  font-size: 0.92rem;
-  font-weight: 500;
+  font-size: 0.88rem;
+  font-weight: 600;
   letter-spacing: -0.01em;
-  color: var(--fg);
-  margin-bottom: 0.2rem;
+  color: #ffffff;
+  margin-bottom: 2px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -677,8 +685,8 @@ footer {
 
 .spotify-meta {
   font-family: "Inter", sans-serif;
-  font-size: 0.75rem;
-  color: var(--muted);
+  font-size: 0.72rem;
+  color: #b3b3b3;
   font-weight: 400;
   white-space: nowrap;
   overflow: hidden;
@@ -687,14 +695,53 @@ footer {
 
 .spotify-time {
   font-family: "DM Mono", monospace;
-  font-size: 0.68rem;
-  color: var(--muted);
+  font-size: 0.65rem;
+  color: #b3b3b3;
   letter-spacing: 0.01em;
-  margin-top: 0.25rem;
+  margin-top: 4px;
 }
 
 .spotify-note {
   font-style: italic;
+  color: #b3b3b3;
+}
+
+.spotify-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.spotify-ctrl {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #b3b3b3;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s;
+}
+
+.spotify-ctrl:hover {
+  color: #ffffff;
+}
+
+.admin-pin-input {
+  display: block;
+  margin: 0.5rem auto 0;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #b3b3b3;
+  outline: none;
+  font-family: "DM Mono", monospace;
+  font-size: 0.8rem;
+  color: var(--fg);
+  width: 100px;
+  padding: 2px 0;
+  text-align: center;
 }
 
 /* ── RESPONSIVE ── */
