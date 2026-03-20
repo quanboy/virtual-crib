@@ -2,14 +2,13 @@
 
 ## What This Is
 
-Victor Quan's personal portfolio website. Single-page layout in `portfolio.html` with About and Projects sections, plus a separate `projects.html` (unused). Backed by a Spring Boot service (`spotify-backend/`) that proxies the Spotify API.
+Victor Quan's personal portfolio website. Single-page layout in `portfolio.html` with Hero, About, and Projects sections. Backed by a Spring Boot service (`spotify-backend/`) that proxies the Spotify API.
 
 ## Stack
 
 **Frontend**
 - HTML5 / CSS3 / Vanilla JS — no framework, no build step
 - Google Fonts CDN — DM Mono, DM Sans, Inter
-- Cloudflare Email Protection — email obfuscation script
 - `serve` (Node.js) — local dev server only
 
 **Backend** (`spotify-backend/`)
@@ -46,8 +45,6 @@ Local secrets go in `spotify-backend/src/main/resources/application-local.proper
 ```
 virtual-crib/
 ├── portfolio.html            # Single-page site — hero, about, projects, listening widget
-├── about.html                # Legacy about page (content now in portfolio.html)
-├── projects.html             # Standalone projects page (unused, content now in portfolio.html)
 ├── styles/
 │   └── main.css              # All styles
 ├── spotify-backend/          # Separate git repo, deployed to Railway
@@ -79,14 +76,18 @@ virtual-crib/
 All styles in `styles/main.css`, organized by section comment headers:
 
 - `RESET & VARIABLES` — CSS custom properties
-- `BASE` — global defaults
-- `ANIMATIONS` — keyframes
-- `NAV` — navigation bar (hidden; replaced by hero-links)
-- `HERO / ABOUT / PROJECTS / FOOTER` — all sections on single page
-- `NEWS TICKER` — fixed scrolling bar at top
-- `LISTENING / SPOTIFY` — now-playing + recently-played widget (dark Spotify miniplayer style, album art stacked above text)
-- `SCROLL REVEAL` — IntersectionObserver fade-in
-- `CURSOR` — custom dot cursor
+- `ANIMATIONS` — keyframes (fadeIn, blink, tickerScroll, blinkCaret)
+- `NAV LINKS` — `.nav-sub` used in hero-links
+- `SECTIONS` — shared section padding and labels
+- `HERO` — heading with typewriter effect, nav links, tagline, Spotify widget
+- `ABOUT` — bio text + meta grid
+- `PROJECTS` — masonry card grid (2-column, `break-inside: avoid`)
+- `FOOTER` — social icons + copyright, pinned to bottom via `margin-top: auto`
+- `NEWS TICKER` — fixed bar at top with fade-in + expand load animation
+- `SCROLL REVEAL` — IntersectionObserver fade-up with staggered delays
+- `TYPEWRITER` — blinking caret animation for hero heading
+- `CURSOR` — custom dot cursor (hidden on touch devices)
+- `LISTENING / SPOTIFY` — dark card widget with album art, track info, elapsed timer, admin controls
 - `RESPONSIVE` — single breakpoint at `768px`
 
 ### Design tokens (`:root`)
@@ -96,19 +97,20 @@ All styles in `styles/main.css`, organized by section comment headers:
 | `--bg` | `#F7F6F2` | Page background |
 | `--fg` | `#111110` | Primary text |
 | `--muted` | `#888884` | Secondary text |
-| `--accent` | `#1A1A18` | Dark accent |
+| `--accent` | `#1A1A18` | Dark accent (hero divider) |
 | `--line` | `#E2E0D8` | Borders |
-| `--tag-bg` | `#EEEEE9` | Skill/tech tags |
 | `--ticker-gold` | `#D4A017` | News ticker highlight |
 
 ## JavaScript Patterns
 
-All JS is inline in the HTML files:
+All JS is inline in `portfolio.html`:
 - **Custom cursor** — mousemove listener on `.cursor`
-- **Scroll reveal** — `IntersectionObserver` adds `.visible` class
-- **Spotify widget** — fetches `/spotify/now-playing` and `/spotify/recently-played` on load, polls now-playing every 10s. Backend URL is `const SPOTIFY_API` at the top of the script block in `portfolio.html`. Currently set to the Railway URL. `progressMs` is extracted at the top level of the now-playing response and passed through to seed the elapsed timer accurately.
-  - **Dynamic label:** The `#spotify-label` element above the widget switches between "Currently Listening" and "Recently Played" based on playback state.
+- **Typewriter** — types out "Hello World, I am Victor Quan" character by character, removes caret on completion
+- **Scroll reveal** — `IntersectionObserver` adds `.visible` class; project cards staggered 150ms apart
+- **Spotify widget** — fetches `/spotify/now-playing` and `/spotify/recently-played` on load, polls now-playing every 10s. Backend URL is `const SPOTIFY_API` at the top of the script block. Currently set to the Railway URL. `progressMs` seeds the elapsed timer accurately. First load triggers a slide-up animation (one-time via `_widgetLoaded` flag).
+  - **Dynamic label:** `#spotify-label` switches between "Currently Listening" and "Recently Played" based on playback state.
   - **Admin controls:** Hidden by default; activated via Shift+S pin input (`101901`). Shows prev/play-pause/next buttons. Play/pause button toggles based on `_isCurrentlyPlaying`. Polling pauses while pin input is visible.
+- **News ticker** — fetches `/news/headlines`, duplicates items for seamless scroll, ticker bar uses fade-in + expand animation on load via `.ticker-visible` class. Refreshes every 5 minutes.
 
 ## Spotify API Endpoints
 
@@ -164,16 +166,16 @@ The running instance is updated immediately after step 2 (no restart needed); en
 
 **Working:**
 - Single-page layout: hero → about → projects → footer, all in `portfolio.html`
-- Nav removed; "About" and "Projects" are anchor links below the hero heading
-- Spotify widget live — dark miniplayer style card, polls every 10s, elapsed timer seeded from `progressMs`
+- "About" and "Projects" are anchor links below the hero heading with accent bar divider
+- Typewriter effect on hero heading
+- Spotify widget live — dark card with album art stacked above text, polls every 10s, elapsed timer, slide-up load animation
 - Admin controls (Shift+S) with prev/play-pause/next
-- News ticker below hero heading area, scrolls at 10s speed
+- News ticker at top with fade-in + expand load animation, scrolls continuously
 - About section with bio text and meta info (Location: Orlando, FL; Focus: Full-Stack Development; Currently: Data Coordinator)
-- Projects section with 3 projects listed
-- Footer: centered SVG icons (GitHub, LinkedIn, Twitter/X, Email) + copyright line with border-top separator
-
-**Still needs personalization:**
-- `portfolio.html` — real GitHub/LinkedIn/Twitter URLs in footer icons
+- Projects section with 5 projects in masonry card layout with hover glow + lift
+- Scroll reveal animations on about grid and project cards (staggered)
+- Footer: centered SVG icons (GitHub, LinkedIn, Email) + copyright line
+- Social links: GitHub (quanboy), LinkedIn (victor-quan-729752176), Email (victorquan24@gmail.com)
 
 **Still needs doing:**
 - Deploy frontend to static host, then set `ALLOWED_ORIGINS` in Railway

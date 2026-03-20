@@ -3,11 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Victor Quan — developer based in Florida. Portfolio, projects, and what I'm listening to." />
     <title>victor quan.</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Inter:wght@300;400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400&family=DM+Sans:ital,wght@1,300&family=Inter:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles/main.css" />
@@ -29,7 +30,7 @@
     <!-- HERO -->
     <section id="hero">
       <div class="hero-inner">
-        <h1 class="hero-name">Hello World,<br />I'm Victor</h1>
+        <h1 class="hero-name"><span class="typewriter" id="typewriter"></span></h1>
         <div class="hero-links">
           <a href="#about" class="nav-sub">About</a>
           <span class="hero-divider"></span>
@@ -47,7 +48,7 @@
     <section id="about">
       <div class="section-inner">
         <div class="section-label">About</div>
-        <div class="about-grid">
+        <div class="about-grid reveal">
           <div class="about-text">
             <p>
               Hello, my name is Victor - first off, thanks for visiting my page!
@@ -78,42 +79,69 @@
     <section id="projects">
       <div class="section-inner">
         <div class="section-label">Projects</div>
-        <div class="projects-list">
-          <a class="project-item" href="#">
-            <div>
+        <div class="projects-grid">
+          <a class="project-card reveal" href="#">
+            <div class="project-card-header">
               <div class="project-num">01</div>
-              <div class="project-title">Automating My Weird Finance Note Keeping Process</div>
-              <div class="project-desc">Automated my financial note keeping by utilizing Python and OCR text/image parser to create a pipeline from iCloud Notes to Google Sheets.</div>
-            </div>
-            <div class="project-meta">
               <span class="project-arrow">&nearr;</span>
-              <div class="project-tags">
-                <span class="project-tag">Python</span>
-                <span class="project-tag">OCR</span>
-              </div>
+            </div>
+            <div class="project-title">Automating My Weird Finance Note Keeping Process</div>
+            <div class="project-divider"></div>
+            <div class="project-desc">Automated my financial note keeping by utilizing Python and OCR text/image parser to create a pipeline from iCloud Notes to Google Sheets.</div>
+            <div class="project-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">OCR</span>
             </div>
           </a>
-          <a class="project-item" href="#">
-            <div>
+          <a class="project-card reveal" href="#">
+            <div class="project-card-header">
               <div class="project-num">02</div>
-              <div class="project-title">Fantasy Seers</div>
-              <div class="project-desc">Talk soon!</div>
-            </div>
-            <div class="project-meta">
               <span class="project-arrow">&nearr;</span>
+            </div>
+            <div class="project-title">Fantasy Seers</div>
+            <div class="project-divider"></div>
+            <div class="project-desc">A personal fantasy football ranking tool with bias analytics and season-over-season accountability. Users build and lock their big board before the season, the AI chatbot surfaces hidden tendencies across the user base, and end-of-season grading holds everyone accountable for their takes.</div>
+            <div class="project-tags">
+              <span class="project-tag">Coming Soon</span>
             </div>
           </a>
-          <a class="project-item" href="#">
-            <div>
+          <a class="project-card reveal" href="#">
+            <div class="project-card-header">
               <div class="project-num">03</div>
-              <div class="project-title">Modern Day Love Letter</div>
-              <div class="project-desc">Made a website for my SO to celebrate our 2 year anniversary &lt;3</div>
-            </div>
-            <div class="project-meta">
               <span class="project-arrow">&nearr;</span>
-              <div class="project-tags">
-                <span class="project-tag">Web</span>
-              </div>
+            </div>
+            <div class="project-title">NBA Prop Analyzer</div>
+            <div class="project-divider"></div>
+            <div class="project-desc">An application for seeing player prop trends in the NBA graphically.</div>
+            <div class="project-tags">
+              <span class="project-tag">NBA</span>
+              <span class="project-tag">Data Viz</span>
+            </div>
+          </a>
+          <a class="project-card reveal" href="#">
+            <div class="project-card-header">
+              <div class="project-num">04</div>
+              <span class="project-arrow">&nearr;</span>
+            </div>
+            <div class="project-title">On Wax</div>
+            <div class="project-divider"></div>
+            <div class="project-desc">A full-stack album rating app powered by Spotify. Connect your Spotify account, start a listening session for the album currently playing, rate each track 1-10 as you listen, and get a final score when you're done.</div>
+            <div class="project-tags">
+              <span class="project-tag">Spring Boot</span>
+              <span class="project-tag">React</span>
+              <span class="project-tag">PostgreSQL</span>
+            </div>
+          </a>
+          <a class="project-card reveal" href="#">
+            <div class="project-card-header">
+              <div class="project-num">05</div>
+              <span class="project-arrow">&nearr;</span>
+            </div>
+            <div class="project-title">Modern Day Love Letter</div>
+            <div class="project-divider"></div>
+            <div class="project-desc">Made a website for my SO to celebrate our 2 year anniversary &lt;3</div>
+            <div class="project-tags">
+              <span class="project-tag">Web</span>
             </div>
           </a>
         </div>
@@ -123,7 +151,7 @@
     <!-- FOOTER -->
     <footer>
       <div class="footer-icons">
-        <a href="https://github.com" target="_blank" aria-label="GitHub">
+        <a href="https://github.com/quanboy" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -136,7 +164,7 @@
             />
           </svg>
         </a>
-        <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
+        <a href="https://www.linkedin.com/in/victor-quan-729752176/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -149,21 +177,8 @@
             />
           </svg>
         </a>
-        <a href="https://twitter.com" target="_blank" aria-label="Twitter">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path
-              d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"
-            />
-          </svg>
-        </a>
         <a
-          href="/cdn-cgi/l/email-protection#354c5a40755058545c591b565a58"
+          href="mailto:victorquan24@gmail.com"
           aria-label="Email"
         >
           <svg
@@ -185,10 +200,6 @@
       <div class="footer-copy">Victor Quan · © 2026 · Portfolio</div>
     </footer>
 
-    <script
-      data-cfasync="false"
-      src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
-    ></script>
     <script>
       // Cursor dot
       const cursor = document.getElementById("cursor");
@@ -202,20 +213,38 @@
       // Scroll reveal
       const observer = new IntersectionObserver(
         (entries) => {
-          entries.forEach((entry, i) => {
+          entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              setTimeout(() => entry.target.classList.add("visible"), 0);
+              const delay = entry.target.dataset.delay || 0;
+              setTimeout(() => entry.target.classList.add("visible"), delay);
             }
           });
         },
         { threshold: 0.1 },
       );
 
-      document
-        .querySelectorAll(".reveal")
-        .forEach((el) => observer.observe(el));
+      document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 
-      // Stagger child reveals in grids
+      // Stagger project cards
+      document.querySelectorAll(".project-card.reveal").forEach((card, i) => {
+        card.dataset.delay = i * 150;
+      });
+
+      // Typewriter effect
+      const typewriterEl = document.getElementById("typewriter");
+      const typewriterText = "Hello World, I am Victor Quan";
+      let charIndex = 0;
+      function typeNext() {
+        if (charIndex < typewriterText.length) {
+          typewriterEl.textContent += typewriterText[charIndex];
+          charIndex++;
+          setTimeout(typeNext, 60);
+        } else {
+          typewriterEl.style.borderRight = "none";
+          typewriterEl.style.animation = "none";
+        }
+      }
+      setTimeout(typeNext, 400);
 
       // ── SPOTIFY ──────────────────────────────────────────────────────────────
       const SPOTIFY_API =
@@ -229,6 +258,7 @@
 
       let _adminMode = false;
       let _isCurrentlyPlaying = false;
+      let _widgetLoaded = false;
 
       function escHtml(str) {
         return String(str ?? "")
@@ -262,7 +292,21 @@
       }
 
       function renderWidget(html) {
-        document.getElementById("spotify-widget").innerHTML = html;
+        const widget = document.getElementById("spotify-widget");
+        widget.innerHTML = html;
+        if (!_widgetLoaded) {
+          _widgetLoaded = true;
+          const card = widget.querySelector(".spotify-card");
+          if (card) {
+            card.style.opacity = "0";
+            card.style.transform = "translateY(30px)";
+            card.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+            setTimeout(() => {
+              card.style.opacity = "1";
+              card.style.transform = "translateY(0)";
+            }, 50);
+          }
+        }
       }
 
       function artEl(url) {
@@ -408,7 +452,9 @@
             .map((h) => `<div class="ticker-item">${escHtml(h)}</div>`)
             .join("");
           document.getElementById("ticker-track").innerHTML = items + items;
-          document.getElementById("ticker-bar").style.display = "flex";
+          const bar = document.getElementById("ticker-bar");
+          bar.style.display = "flex";
+          setTimeout(() => bar.classList.add("ticker-visible"), 50);
         } catch {
           /* hide ticker, render nothing */
         }
