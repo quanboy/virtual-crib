@@ -37,10 +37,10 @@
           <a href="#projects" class="nav-sub">Projects</a>
         </div>
         <p class="hero-tagline">Welcome to my crib.</p>
-        <div class="spotify-label reveal" id="spotify-label">
+        <div class="spotify-label" id="spotify-label">
           Currently Listening
         </div>
-        <div id="spotify-widget" class="reveal"></div>
+        <div id="spotify-widget"></div>
       </div>
     </section>
 
@@ -210,13 +210,31 @@
       document.addEventListener("mouseenter", () => (cursor.style.opacity = 1));
       document.addEventListener("mouseleave", () => (cursor.style.opacity = 0));
 
-      // Scroll reveal
+      // Stagger project cards
+      document.querySelectorAll(".project-card.reveal").forEach((card, i) => {
+        card.dataset.delay = i * 150;
+      });
+
+      // Scroll reveal — skip elements already in viewport on load
+      const initialRects = new Set();
+      document.querySelectorAll(".reveal").forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          initialRects.add(el);
+        }
+      });
+
+      let scrolled = false;
+      window.addEventListener("scroll", () => { scrolled = true; }, { once: true });
+
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
+              if (initialRects.has(entry.target) && !scrolled) return;
               const delay = entry.target.dataset.delay || 0;
               setTimeout(() => entry.target.classList.add("visible"), delay);
+              observer.unobserve(entry.target);
             }
           });
         },
@@ -224,11 +242,6 @@
       );
 
       document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
-
-      // Stagger project cards
-      document.querySelectorAll(".project-card.reveal").forEach((card, i) => {
-        card.dataset.delay = i * 150;
-      });
 
       // Typewriter effect
       const typewriterEl = document.getElementById("typewriter");
