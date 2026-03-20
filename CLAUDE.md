@@ -87,7 +87,7 @@ All styles in `styles/main.css`, organized by section comment headers:
 - `SCROLL REVEAL` — IntersectionObserver fade-up with staggered delays
 - `TYPEWRITER` — blinking caret animation for hero heading
 - `CURSOR` — custom dot cursor (hidden on touch devices)
-- `LISTENING / SPOTIFY` — dark card widget with album art, track info, elapsed timer, admin controls
+- `LISTENING / SPOTIFY` — dark card widget with gradient background, rounded corners, gold left border, edge-to-edge album art, frosted glass backdrop, soft shadow. Track info, elapsed timer, admin controls
 - `RESPONSIVE` — single breakpoint at `768px`
 
 ### Design tokens (`:root`)
@@ -105,10 +105,10 @@ All styles in `styles/main.css`, organized by section comment headers:
 
 All JS is inline in `portfolio.html`:
 - **Custom cursor** — mousemove listener on `.cursor`
-- **Typewriter** — types out "Hello World, I am Victor Quan" character by character, removes caret on completion
-- **Scroll reveal** — `IntersectionObserver` adds `.visible` class; project cards staggered 150ms apart
+- **Typewriter** — heading and tagline type simultaneously at 60ms/char via shared `typeText()` helper. Caret removed on completion.
+- **Scroll reveal** — `IntersectionObserver` adds `.visible` class; project cards staggered 150ms apart. Elements in viewport on load are skipped until user scrolls.
 - **Spotify widget** — fetches `/spotify/now-playing` and `/spotify/recently-played` on load, polls now-playing every 10s. Backend URL is `const SPOTIFY_API` at the top of the script block. Currently set to the Railway URL. `progressMs` seeds the elapsed timer accurately. First load triggers a slide-up animation (one-time via `_widgetLoaded` flag).
-  - **Dynamic label:** `#spotify-label` switches between "Currently Listening" and "Recently Played" based on playback state.
+  - **Dynamic label:** `#spotify-label` starts hidden (`visibility: hidden`), shown via `setLabel()` helper once API responds. Switches between "Currently Listening" and "Recently Played".
   - **Admin controls:** Hidden by default; activated via Shift+S pin input (`101901`). Shows prev/play-pause/next buttons. Play/pause button toggles based on `_isCurrentlyPlaying`. Polling pauses while pin input is visible.
 - **News ticker** — fetches `/news/headlines`, duplicates items for seamless scroll, ticker bar uses fade-in + expand animation on load via `.ticker-visible` class. Refreshes every 5 minutes.
 

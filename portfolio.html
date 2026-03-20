@@ -36,8 +36,8 @@
           <span class="hero-divider"></span>
           <a href="#projects" class="nav-sub">Projects</a>
         </div>
-        <p class="hero-tagline">Welcome to my crib.</p>
-        <div class="spotify-label" id="spotify-label">
+        <p class="hero-tagline"><span class="typewriter" id="typewriter-tagline"></span></p>
+        <div class="spotify-label" id="spotify-label" style="visibility: hidden">
           Currently Listening
         </div>
         <div id="spotify-widget"></div>
@@ -244,20 +244,29 @@
       document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 
       // Typewriter effect
-      const typewriterEl = document.getElementById("typewriter");
-      const typewriterText = "Hello World, I am Victor Quan";
-      let charIndex = 0;
-      function typeNext() {
-        if (charIndex < typewriterText.length) {
-          typewriterEl.textContent += typewriterText[charIndex];
-          charIndex++;
-          setTimeout(typeNext, 60);
-        } else {
-          typewriterEl.style.borderRight = "none";
-          typewriterEl.style.animation = "none";
+      function typeText(el, text, speed, onDone) {
+        let i = 0;
+        function next() {
+          if (i < text.length) {
+            el.textContent += text[i];
+            i++;
+            setTimeout(next, speed);
+          } else {
+            el.style.borderRight = "none";
+            el.style.animation = "none";
+            if (onDone) onDone();
+          }
         }
+        next();
       }
-      setTimeout(typeNext, 400);
+
+      const heroEl = document.getElementById("typewriter");
+      const taglineEl = document.getElementById("typewriter-tagline");
+
+      setTimeout(() => {
+        typeText(heroEl, "Hello World, I am Victor Quan", 60);
+        typeText(taglineEl, "Welcome to my crib.", 60);
+      }, 400);
 
       // ── SPOTIFY ──────────────────────────────────────────────────────────────
       const SPOTIFY_API =
@@ -304,6 +313,12 @@
         }, 1000);
       }
 
+      function setLabel(text) {
+        const el = document.getElementById("spotify-label");
+        el.textContent = text;
+        el.style.visibility = "visible";
+      }
+
       function renderWidget(html) {
         const widget = document.getElementById("spotify-widget");
         widget.innerHTML = html;
@@ -331,8 +346,7 @@
       function showNowPlaying(data) {
         if (!data.isPlaying || !data.title) return false;
         _isCurrentlyPlaying = true;
-        document.getElementById("spotify-label").textContent =
-          "Currently Listening";
+        setLabel("Currently Listening");
         const progressMs = data.progressMs || 0;
         const timeHtml = data.durationMs
           ? `<div class="spotify-time"><span id="spotify-elapsed">${escHtml(fmtMs(progressMs))}</span> / ${escHtml(fmtMs(data.durationMs))}</div>`
@@ -363,8 +377,7 @@
       function showRecentlyPlayed(tracks) {
         if (!tracks || !tracks.length) return;
         _isCurrentlyPlaying = false;
-        document.getElementById("spotify-label").textContent =
-          "Recently Played";
+        setLabel("Recently Played");
         const t = tracks[0];
         const controlsHtml = _adminMode
           ? `<div class="spotify-controls">` +
